@@ -1,6 +1,7 @@
 use std::env;
 use std::fs;
 use std::process;
+use std::error::Error;
 
 fn main() {
     // collect command line arguments - ignore idx 0 (binary name)
@@ -12,13 +13,18 @@ fn main() {
 
     println!("Searching for {} in {}", config.query, config.file_path);
 
-    run(config);
+    // run application
+    if let Err(e) = run(config) {
+        println!("Application error: {e}");
+        process::exit(1);
+    };
 }
 
-fn run(config: Config) {
-    let contents: String =
-        fs::read_to_string(&config.file_path).expect("Unable to read provided file path");
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    // use Box<dyn Error> to allow all error types to propagate
+    let contents: String = fs::read_to_string(&config.file_path)?;
     println!("With contents: {}", contents);
+    Ok(())
 }
 
 struct Config {
