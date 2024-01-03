@@ -1,4 +1,5 @@
 use std::env;
+use std::fs;
 
 fn main() {
     // collect command line arguments - ignore idx 0 (binary name)
@@ -7,4 +8,7 @@ fn main() {
     let file_path: &String = &args[2];
 
     println!("Searching for {} in {}", query, file_path);
+
+    let contents = fs::read_to_string(&file_path).expect("Unable to read provided file path");
+    println!("With contents: {}", contents);
 }
