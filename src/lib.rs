@@ -20,7 +20,6 @@ impl Config {
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     // use Box<dyn Error> to allow all error types to propagate
     let contents: String = fs::read_to_string(&config.file_path)?;
-    println!("Searching for {} in {}", config.query, config.file_path);
-    println!("With contents: {}", contents);
+
     Ok(())
 }
