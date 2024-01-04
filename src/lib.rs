@@ -55,6 +55,7 @@ pub fn search<'a>(query: &str, contents: &'a str, ignore_case: &bool) -> Vec<(us
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::io::ErrorKind;
 
     #[test]
     fn case_sensitive() {
@@ -111,5 +112,25 @@ mod tests {
             config.is_err_and(|err| err == "Too few arguments provided."),
             "Unexpected error message when passing to few arguments."
         );
+    }
+
+    #[test]
+    fn read_file_contents_on_pass() {
+        let contents = read_file_contents("tests/data/dummy_input.txt");
+        assert!(
+            contents.is_ok(),
+            "Did not read tests/data/dummy_input.txt: {:?}",
+            contents.err()
+        );
+        assert_eq!(
+            contents.unwrap(),
+            "Rust:\nsafe, fast, productive.\nPick three.\nDuct tape.".to_string()
+        );
+    }
+
+    #[test]
+    fn read_file_contents_non_existant() {
+        let contents = read_file_contents("does_not_exist.txt");
+        assert!(contents.is_err_and(|err| err.kind() == ErrorKind::NotFound));
     }
 }
