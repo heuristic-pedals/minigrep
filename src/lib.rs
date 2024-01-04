@@ -1,6 +1,6 @@
+use std::env;
 use std::error::Error;
 use std::fs;
-use std::env;
 
 pub struct Config {
     pub query: String,
@@ -16,7 +16,11 @@ impl Config {
         let query: String = parsed_args[1].clone();
         let file_path: String = parsed_args[2].clone();
         let ignore_case: bool = env::var("IGNORE_CASE").is_ok();
-        Ok(Config { query, file_path, ignore_case })
+        Ok(Config {
+            query,
+            file_path,
+            ignore_case,
+        })
     }
 }
 
@@ -31,20 +35,15 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 }
 
 pub fn search<'a>(query: &str, contents: &'a str, ignore_case: &bool) -> Vec<(usize, &'a str)> {
-    if *ignore_case {
-        contents.lines()
-            .enumerate()
-            .filter(|(_, line)| line.to_lowercase().contains(&query.to_lowercase()))
-            .map(|(i, line)| (i+1, line))
-            .collect()
-    } else {
-        contents.lines()
-            .enumerate()
-            .filter(|(_, line)| line.contains(&query))
-            .map(|(i, line)| (i+1, line))
-            .collect()
-    }
-
+    contents
+        .lines()
+        .enumerate()
+        .filter(|(_, line)| match *ignore_case {
+            true => line.to_lowercase().contains(&query.to_lowercase()),
+            _ => line.contains(&query),
+        })
+        .map(|(i, line)| (i + 1, line))
+        .collect()
 }
 
 #[cfg(test)]
@@ -55,14 +54,19 @@ mod tests {
     fn case_sensitive() {
         let query = "duct";
         let contents = "Rust:\nsafe, fast, productive.\nPick three.\nDuct tape.";
-        assert_eq!(vec![(2, "safe, fast, productive.")], search(query, contents, &false));
+        assert_eq!(
+            vec![(2, "safe, fast, productive.")],
+            search(query, contents, &false)
+        );
     }
 
     #[test]
     fn case_insensitive() {
         let query = "rUsT";
         let contents = "Rust:\nsafe, fast, productive.\nPick three.\nTrust noone.";
-        assert_eq!(vec![(1, "Rust:"), (4, "Trust noone.")], search(query, contents, &true));
+        assert_eq!(
+            vec![(1, "Rust:"), (4, "Trust noone.")],
+            search(query, contents, &true)
+        );
     }
-
 }
