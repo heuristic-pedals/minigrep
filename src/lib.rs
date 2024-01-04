@@ -23,21 +23,25 @@ impl Config {
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     // use Box<dyn Error> to allow all error types to propagate
     let contents: String = fs::read_to_string(&config.file_path)?;
-    for line in search(&config.query, &contents, &config.ignore_case) {
-        println!("{}", line);
+    for (i, line) in search(&config.query, &contents, &config.ignore_case) {
+        println!("L{i}: {line}");
     }
 
     Ok(())
 }
 
-pub fn search<'a>(query: &str, contents: &'a str, ignore_case: &bool) -> Vec<&'a str> {
+pub fn search<'a>(query: &str, contents: &'a str, ignore_case: &bool) -> Vec<(usize, &'a str)> {
     if *ignore_case {
         contents.lines()
-            .filter(|line| line.to_lowercase().contains(&query.to_lowercase()))
+            .enumerate()
+            .filter(|(_, line)| line.to_lowercase().contains(&query.to_lowercase()))
+            .map(|(i, line)| (i+1, line))
             .collect()
     } else {
         contents.lines()
-            .filter(|line| line.contains(&query))
+            .enumerate()
+            .filter(|(_, line)| line.contains(&query))
+            .map(|(i, line)| (i+1, line))
             .collect()
     }
 
@@ -51,14 +55,14 @@ mod tests {
     fn case_sensitive() {
         let query = "duct";
         let contents = "Rust:\nsafe, fast, productive.\nPick three.\nDuct tape.";
-        assert_eq!(vec!["safe, fast, productive."], search(query, contents, &false));
+        assert_eq!(vec![(2, "safe, fast, productive.")], search(query, contents, &false));
     }
 
     #[test]
     fn case_insensitive() {
         let query = "rUsT";
         let contents = "Rust:\nsafe, fast, productive.\nPick three.\nTrust noone.";
-        assert_eq!(vec!["Rust:", "Trust noone."], search(query, contents, &true));
+        assert_eq!(vec![(1, "Rust:"), (4, "Trust noone.")], search(query, contents, &true));
     }
 
 }
