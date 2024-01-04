@@ -6,32 +6,31 @@ pub struct Config {
     pub query: String,
     pub file_path: String,
     pub ignore_case: bool,
+    contents: String, 
 }
 
 impl Config {
-    pub fn build(parsed_args: &Vec<String>) -> Result<Config, &'static str> {
+    pub fn build(parsed_args: &Vec<String>) -> Result<Config, Box<dyn Error>> {
         if parsed_args.len() < 3 {
-            return Err("Too few arguments provided.");
+            return Err("Too few arguments provided.".into());
         }
         let query: String = parsed_args[1].clone();
         let file_path: String = parsed_args[2].clone();
         let ignore_case: bool = env::var("IGNORE_CASE").is_ok();
+        let contents: String = fs::read_to_string(&file_path)?;
         Ok(Config {
             query,
             file_path,
             ignore_case,
+            contents
         })
     }
 }
 
-pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    // use Box<dyn Error> to allow all error types to propagate
-    let contents: String = fs::read_to_string(&config.file_path)?;
-    for (i, line) in search(&config.query, &contents, &config.ignore_case) {
+pub fn run(config: Config) {
+    for (i, line) in search(&config.query, &config.contents, &config.ignore_case) {
         println!("L{i}: {line}");
     }
-
-    Ok(())
 }
 
 pub fn search<'a>(query: &str, contents: &'a str, ignore_case: &bool) -> Vec<(usize, &'a str)> {
@@ -77,7 +76,7 @@ mod tests {
         let dummy_parsed_args = vec![
             "".to_string(),
             "dummy_query".to_string(),
-            "dummy_file_path".to_string(),
+            "tests/data/dummy_input.txt".to_string(),
         ];
         let config = Config::build(&dummy_parsed_args);
         assert!(config.is_ok());
@@ -88,7 +87,7 @@ mod tests {
             config.query
         );
         assert_eq!(
-            config.file_path, "dummy_file_path",
+            config.file_path, "tests/data/dummy_input.txt",
             "Unexpected `file_path` value {}",
             config.query
         );
@@ -102,7 +101,7 @@ mod tests {
         assert!(config.is_err(), "Too few arguments case was not detected.");
         assert!(
             // check equality since err message not expected to change
-            config.is_err_and(|err| err == "Too few arguments provided."),
+            config.is_err_and(|err| err.to_string() == "Too few arguments provided."),
             "Unexpected error message when passing to few arguments."
         );
     }
