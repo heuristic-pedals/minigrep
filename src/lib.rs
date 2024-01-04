@@ -71,4 +71,39 @@ mod tests {
             "Case in-sensitive results do not match expectations.",
         );
     }
+
+    #[test]
+    fn config_build_on_pass() {
+        let dummy_parsed_args = vec![
+            "".to_string(),
+            "dummy_query".to_string(),
+            "dummy_file_path".to_string(),
+        ];
+        let config = Config::build(&dummy_parsed_args);
+        assert!(config.is_ok());
+        let config = config.unwrap();
+        assert_eq!(
+            config.query, "dummy_query",
+            "Unexpected `query` value {}",
+            config.query
+        );
+        assert_eq!(
+            config.file_path, "dummy_file_path",
+            "Unexpected `file_path` value {}",
+            config.query
+        );
+    }
+
+    #[test]
+    fn config_build_too_few_arguments() {
+        let dummy_parsed_args = vec!["prog_name".to_string()];
+        let config = Config::build(&dummy_parsed_args);
+        // split out assertions to imporve test debug messages
+        assert!(config.is_err(), "Too few arguments case was not detected.");
+        assert!(
+            // check equality since err message not expected to change
+            config.is_err_and(|err| err == "Too few arguments provided."),
+            "Unexpected error message when passing to few arguments."
+        );
+    }
 }
