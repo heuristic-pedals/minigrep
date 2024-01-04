@@ -56,7 +56,8 @@ mod tests {
         let contents = "Rust:\nsafe, fast, productive.\nPick three.\nDuct tape.";
         assert_eq!(
             vec![(2, "safe, fast, productive.")],
-            search(query, contents, &false)
+            search(query, contents, &false),
+            "Case sensitive results do not match expectations.",
         );
     }
 
@@ -66,7 +67,8 @@ mod tests {
         let contents = "Rust:\nsafe, fast, productive.\nPick three.\nTrust noone.";
         assert_eq!(
             vec![(1, "Rust:"), (4, "Trust noone.")],
-            search(query, contents, &true)
+            search(query, contents, &true),
+            "Case in-sensitive results do not match expectations.",
         );
     }
 }
