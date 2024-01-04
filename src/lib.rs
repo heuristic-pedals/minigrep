@@ -1,6 +1,7 @@
 use std::env;
 use std::error::Error;
 use std::fs;
+use std::io;
 
 pub struct Config {
     pub query: String,
@@ -26,12 +27,17 @@ impl Config {
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     // use Box<dyn Error> to allow all error types to propagate
-    let contents: String = fs::read_to_string(&config.file_path)?;
+    let contents: String = read_file_contents(&config.file_path)?;
     for (i, line) in search(&config.query, &contents, &config.ignore_case) {
         println!("L{i}: {line}");
     }
 
     Ok(())
+}
+
+pub fn read_file_contents(file_path: &str) -> Result<String, io::Error> {
+    // shallow wrapper for now - TODO improve to buffer read
+    fs::read_to_string(file_path)
 }
 
 pub fn search<'a>(query: &str, contents: &'a str, ignore_case: &bool) -> Vec<(usize, &'a str)> {

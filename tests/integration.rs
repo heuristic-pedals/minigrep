@@ -1,5 +1,4 @@
 use minigrep::Config;
-use std::fs;
 
 struct IntegTestSetup;
 
@@ -11,7 +10,7 @@ impl IntegTestSetup {
         Config::build(&parsed_args).unwrap()
     }
     fn contents(config: &Config) -> String {
-        fs::read_to_string(&config.file_path).unwrap_or("".to_string())
+        minigrep::read_file_contents(&config.file_path).unwrap_or("".to_string())
     }
 }
 
