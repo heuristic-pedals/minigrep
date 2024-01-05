@@ -1,6 +1,8 @@
 # `minigrep` CI GitHub Action. Built using the following sources:
 #    - Default rust runnner configured by GitHub
 #    - actions-rs meta: https://github.com/actions-rs/meta/blob/master/recipes/quickstart.md
+#      note: actions-rs removed due to lack of maintenance and warnings being thrown, but the
+#      structure and principles the examples provide remain.
 
 name: CI
 
@@ -16,58 +18,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: check
+      - name: check
+        run: cargo check
           
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: build
+      - name: build
+        run: cargo build --verbose
 
   test:
     name: Test Suite
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - uses: actions-rs/cargo@v1
-        with:
-          command: test
+      - name: test
+        run: cargo test --verbose
 
   fmt:
     name: Rustfmt
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions-rs/toolchain@v1
-        with:
-          profile: minimal
-          toolchain: stable
-          override: true
-      - run: rustup component add rustfmt
-      - uses: actions-rs/cargo@v1
-        with:
-          command: fmt
-          args: --all -- --check
+      - name: fmt
+        run: cargo fmt --all -- --check
 
   clippy:
     name: Clippy
@@ -83,4 +59,4 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: clippy
-          args: -- -D warnings
+          args: cargo clippy -- -D warnings
