@@ -1,3 +1,4 @@
+#![doc = include_str!("../README.md")]
 use std::env;
 use std::error::Error;
 use std::fs;
