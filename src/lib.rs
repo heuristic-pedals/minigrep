@@ -46,7 +46,7 @@ pub fn search<'a>(query: &str, contents: &'a str, ignore_case: &bool) -> Vec<(us
         .enumerate()
         .filter(|(_, line)| match *ignore_case {
             true => line.to_lowercase().contains(&query.to_lowercase()),
-            _ => line.contains(&query),
+            _ => line.contains(query),
         })
         .map(|(i, line)| (i + 1, line))
         .collect()
