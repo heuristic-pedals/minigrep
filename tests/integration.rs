@@ -44,4 +44,13 @@ mod integration_tests {
             );
         });
     }
+
+    #[test]
+    fn run_on_pass() {
+        temp_env::with_var("IGNORE_CASE", None::<String>, || {
+            let config = IntegTestSetup::config();
+            let result = minigrep::run(config);
+            assert!(result.is_ok());
+        });
+    }
 }
