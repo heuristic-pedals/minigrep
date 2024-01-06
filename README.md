@@ -71,7 +71,7 @@ L4: Duct tape.
 
 ## Licence
 
-This code is released under the [MIT Licence][mit].
+This code is released under the MIT Licence.
 
 ## Notes
 
@@ -84,4 +84,3 @@ These binary and libary crates are based on [Chapter 12 of The Rust Book][rust b
 [cargo-llvm-cov]: https://github.com/taiki-e/cargo-llvm-cov
 [codecov]: https://about.codecov.io
 [crates-io]: https://crates.io
-[mit]: LICENSE
