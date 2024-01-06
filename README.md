@@ -1,6 +1,7 @@
 # `minigrep`
 
 ![Build](https://github.com/heuristic-pedals/minigrep/actions/workflows/ci.yml/badge.svg?branch=main)
+![Docs](https://github.com/heuristic-pedals/minigrep/actions/workflows/docs.yml/badge.svg?branch=main)
 ![Codecov](https://img.shields.io/codecov/c/github/heuristic-pedals/minigrep)
 
 A small [grep][grep]-like implementation in `rust`. Based on [Chapter 12 of the Rust book][rust book].
