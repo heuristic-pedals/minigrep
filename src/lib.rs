@@ -4,10 +4,13 @@ use std::error::Error;
 use std::fs;
 use std::io;
 
-/// Capture and collect the runtime configuration altogether
+/// Capture and collect the runtime configuration
 pub struct Config {
+    /// Query sub-string
     pub query: String,
+    /// Path to input file
     pub file_path: String,
+    /// Flag to control case sensitivity
     pub ignore_case: bool,
 }
 
