@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="`minigrep`"><title>minigrep - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-fa3bb1812debf86c.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="minigrep" data-themes="" data-resource-suffix="" data-rustdoc-version="1.74.1 (a28077b28 2023-12-04)" data-channel="1.74.1" data-search-js="search-8be46b629f5f14a8.js" data-settings-js="settings-74424d7eec62a23e.js" ><script src="../static.files/storage-fec3eaa3851e447d.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-c5bd66d33317d69f.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-5d8b3c7633ad77ba.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../minigrep/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a></nav><nav class="sidebar"><a class="logo-container" href="../minigrep/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate minigrep</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.1.0</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">minigrep</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/minigrep/lib.rs.html#1-214">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="minigrep"><a href="#minigrep"><code>minigrep</code></a></h2>
+<p><img src="https://github.com/heuristic-pedals/minigrep/actions/workflows/ci.yml/badge.svg?branch=main" alt="Build" />
+<img src="https://github.com/heuristic-pedals/minigrep/actions/workflows/docs.yml/badge.svg?branch=main" alt="Docs" />
+<img src="https://img.shields.io/codecov/c/github/heuristic-pedals/minigrep" alt="Codecov" /></p>
+<p>A small <a href="https://www.gnu.org/software/grep/manual/grep.html">grep</a>-like implementation in <code>rust</code>. Searches for a sub-string pattern (not regex) within lines of a single file and returns them.</p>
+<h3 id="introduction"><a href="#introduction">Introduction</a></h3>
+<p>This repo contains both a binary and library crate. The binary crate can be built and executed locally via the command line interface - this process is described below. The public API of the library is outlined in the relevant section of this site.</p>
+<h3 id="setup"><a href="#setup">Setup</a></h3>
+<p>Prerequisites:</p>
+<ul>
+<li><code>git</code></li>
+<li>Minimum: <code>rustc</code> (recommended: <code>rustup</code> + <code>cargo</code>)</li>
+</ul>
+<p>To build the binary, an installation of <code>rustc</code> is required. The following example uses <code>cargo</code>, but this isn’t strictly required. See the <a href="https://rustc-dev-guide.rust-lang.org/building/how-to-build-and-run.html">rustc dev guide</a> for more details on building using <code>rustc</code> directly.</p>
+<p>Execute the following commands to set-up and build the <code>minigrep</code> binary (optimised in release mode):</p>
+<div class="example-wrap"><pre class="language-shell"><code>git clone https://github.com/heuristic-pedals/minigrep.git
+cd minigrep
+cargo build --release
+</code></pre></div><h3 id="usage"><a href="#usage">Usage</a></h3>
+<p>The command line interface can be used as follows:</p>
+<div class="example-wrap"><pre class="language-shell"><code>./target/release/minigrep [SUB-STRING] [PATH-TO-FILE]
+</code></pre></div>
+<p>Where:</p>
+<ul>
+<li><code>[SUB-STRING]</code>: the sub-string pattern to search for.</li>
+<li><code>[PATH-TO-FILE]</code>: path to the file to search within.</li>
+</ul>
+<h4 id="usage-example"><a href="#usage-example">Usage Example</a></h4>
+<p>Say we are interested in finding the sub-string <code>'duct'</code> within the following <code>.txt</code> file located within a sub-directory <code>./data/</code></p>
+<blockquote>
+<p>Rust:<br>
+Safe, fast, productive.<br>
+Pick three.<br>
+Duct tape.<br></p>
+</blockquote>
+<p>This can be done as follows:</p>
+<div class="example-wrap"><pre class="language-shell"><code>&gt; minigrep % ./target/release/minigrep duct data/example.txt
+L2: safe, fast, productive.
+</code></pre></div>
+<p>The output returns the line number (in this example just L2) and all of the corresponding line’s content. Note, the default behaviour assumes case sensitivity (hence line 4 is not returned). Case insensitive scenarios can be considered by setting the <code>IGNORE_CASE</code> environment variable (then line 4 would also be returned, see the [Environment Variable][#environment-variables] section for more details).</p>
+<h4 id="environment-variables"><a href="#environment-variables">Environment Variables</a></h4>
+<p><code>IGNORE_CASE</code>:</p>
+<p>When set, this will ignore case - treating upper and lower case characters as equivalents. This can be set to any value, it just needs to exist within the scope of the active session. For example, continuing the example from above, on a UNIX machine this can be done easily for a single execution as follows:</p>
+<div class="example-wrap"><pre class="language-shell"><code>&gt; minigrep % IGNORE_CASE=1 ./target/release/minigrep duct data/example.txt
+L2: safe, fast, productive.
+L4: Duct tape.
+</code></pre></div><h3 id="licence"><a href="#licence">Licence</a></h3>
+<p>This code is released under the MIT Licence.</p>
+<h3 id="notes"><a href="#notes">Notes</a></h3>
+<p>These binary and libary crates are based on <a href="https://doc.rust-lang.org/book/ch12-00-an-io-project.html">Chapter 12 of The Rust Book</a>. This repository exists for personal practice and learning purposes only, whilst following this book. However, changes and additional functionalities beyond The Rust Book have been introduced such as; refactoring improvements, further unit tests, integration tests, code coverage using <a href="https://github.com/taiki-e/cargo-llvm-cov"><code>cargo-llvm-cov</code></a> + <a href="https://about.codecov.io">codecov</a>, and documentation (using <code>cargo doc</code>). To prevent cluttering <a href="https://crates.io"><code>crates.io</code></a>, the source code and documentation is only hosted in this repository.</p>
+</div></details><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.Config.html" title="struct minigrep::Config">Config</a></div><div class="desc docblock-short">Capture and collect the runtime configuration</div></li></ul><h2 id="functions" class="small-section-header"><a href="#functions">Functions</a></h2><ul class="item-table"><li><div class="item-name"><a class="fn" href="fn.read_file_contents.html" title="fn minigrep::read_file_contents">read_file_contents</a></div><div class="desc docblock-short">A helper function to read a file’s content into memeory. Currently, this is
+just a wrapper around <code>std::fs::read_to_string</code>. It exists as a placeholder
+such that improvements can be made (such as buffered file reading) without
+impacting the API.</div></li><li><div class="item-name"><a class="fn" href="fn.run.html" title="fn minigrep::run">run</a></div><div class="desc docblock-short">A utility function to run <code>minigrep</code> using a parsed runtime config. Will
+read the requested file’s content (using <code>read_file_content</code>) and uses <code>search</code>
+to find the requested sub-string patterns. Prints all results to stdout.</div></li><li><div class="item-name"><a class="fn" href="fn.search.html" title="fn minigrep::search">search</a></div><div class="desc docblock-short">Search the file contents for a sub-string pattern.</div></li></ul></section></div></main></body></html>
