@@ -19,7 +19,7 @@ impl Config {
     /// * `parsed_args` - A vector of strings denoting the parsed inputs.
     /// Expecting the format: [BINARY_NAME, SUB-STRING, PATH-TO-FILE] (this
     /// is the result of calling `std::env::args().collect()`)
-    /// 
+    ///
     /// > Note: the format of `parsed_args` is currently 'awkward' to use. A
     /// future feature will be to implement `Config::new()` such that use cases
     /// that don't require a cli can be catered for.
@@ -90,8 +90,8 @@ pub fn read_file_contents(file_path: &str) -> Result<String, io::Error> {
 /// * `contents` - A string-slice denoting The file's contents.
 /// * `ignore_case` - A boolean flagging whether case sensitivity should be
 /// ignored (case insensitive when `ignore_case` is `true`).
-/// 
-/// > Note: the arguments correspond to fields of a [`Config`] instance and 
+///
+/// > Note: the arguments correspond to fields of a [`Config`] instance and
 /// the contents of the input file.
 ///
 /// # Examples
